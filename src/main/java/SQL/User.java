@@ -10,7 +10,7 @@ public class User implements Serializable {
     @Column(name = "user_id")
     @GeneratedValue
     @Id
-    private long id;
+    private long id;                        //Primary key
     @Column(name = "user_email", unique = true)
     private String email;
     @Column(name = "user_password")
@@ -21,21 +21,20 @@ public class User implements Serializable {
     private String pin;
     @OneToMany
     @JoinColumn(name = "user_id")
-    private List<Notebook> notebooks;
+    private List<Notebook> notebooks;  //List of user notebooks
+    //User can have many notebooks and notebook can have many notes
 
     public User(){}
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", pin='" + pin + '\'' +
-                ", notebooks=" + notebooks +
                 '}';
     }
-
+        /*   Getters and setters for Hibernate and some useful methods   */
     public List<Notebook> getNotebooks() {
         return notebooks;
     }

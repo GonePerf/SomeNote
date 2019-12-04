@@ -12,16 +12,16 @@ public class Note implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "note_id")
-    private long note_id;
+    private long note_id;         //Primary key
     @Column(name = "notebook_id")
-    private long notebook_id;
+    private long notebook_id;     //Foregin key
     @Column(name = "note_name")
     private String name;
     @Column(name = "note_content")
     private String content;
     @Column(name = "note_date")
     @CreationTimestamp
-    private Timestamp date;
+    private Timestamp date;     // Date of creating note
 
     public Note(){}
     public long getNote_id() {
