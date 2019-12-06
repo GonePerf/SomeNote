@@ -41,57 +41,22 @@ public class Login {
     }
     @FXML
     void showRegisterPanel() throws IOException {
-        Pane registerWindow = FXMLLoader.load(getClass().getClassLoader().getResource("Register.fxml"));
-
-        scene.getChildren().setAll(registerWindow);
+        SceneManager.renderScene("register");
     }
     @FXML
     void backToLogin() throws IOException {
-        Pane loginWindow = FXMLLoader.load(getClass().getClassLoader().getResource("Login.fxml"));
-        scene.getChildren().setAll(loginWindow);
+        SceneManager.renderScene("login");
     }
     @FXML
     void showForgotPasswordPanel() throws IOException {
-        Pane loginWindow = FXMLLoader.load(getClass().getClassLoader().getResource("ForgotPassword.fxml"));
-        scene.getChildren().setAll(loginWindow);
+        SceneManager.renderScene("forgotPassword");
     }
     @FXML
     void tryLogin() throws Exception {
-        EntityManagerFactory entityManagerFactory = createEntityManagerFactory("myDatabase");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        User user = entityManager.find(User.class,email.getText());
-        if(user == null) {
-            Info info = new Info("Ten email nie jest przywpisany do żadnego konta");
-            try {
-                info.start(new Stage());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        else{
-            if(user.getPassword().equals(password.getText())) {
+
                 System.out.println("Znaleziono uzytkownika");
-                Pane somnot = FXMLLoader.load(getClass().getClassLoader().getResource("SomeNote.fxml"));
-                Scene program = new Scene(somnot);
-                Stage stage = new Stage();
-                stage.setScene(program);
-                stage.show();
-            }
-            else {
-                Info info = new Info("Błędne hasło");
-                try {
-                    info.start(new Stage());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                SceneManager.renderScene("someNote");
 
-            }
-        }
-
-
-        entityManagerFactory.close();
-        entityManager.close();
-        System.out.println("Próba logowania");
     }
     @FXML
     void changePassword(){

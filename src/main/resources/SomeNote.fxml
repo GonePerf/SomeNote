@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="843.0" prefWidth="1108.0" stylesheets="@modenadark.css" xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="843.0" prefWidth="1108.0" stylesheets="@modenadark.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SomeNoteController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="260.0" prefWidth="260.0" />
     <ColumnConstraints hgrow="SOMETIMES" />
@@ -30,17 +30,17 @@
          <children>
             <VBox prefHeight="200.0" prefWidth="130.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="138.0" text="Dodaj zeszyt" />
+                  <Button mnemonicParsing="false" onAction="#addNotebook" prefHeight="40.0" prefWidth="138.0" text="Dodaj zeszyt" />
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="130.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="179.0" text="Dodaj temat" />
+                  <Button mnemonicParsing="false" onAction="#addNote" prefHeight="40.0" prefWidth="179.0" text="Dodaj temat" />
                </children>
             </VBox>
          </children>
       </HBox>
-      <TextArea promptText="Zawartość zeszytu..." GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <TextArea fx:id="contentNote" promptText="Zawartość zeszytu..." GridPane.columnIndex="1" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="4.0" right="4.0" top="4.0" />
          </GridPane.margin>
@@ -84,10 +84,10 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Imie:" />
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="75.0" prefWidth="505.0" text="Email:" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
-                  <Button alignment="CENTER" layoutX="758.0" layoutY="10.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Konto" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Wyloguj" GridPane.columnIndex="3" GridPane.valignment="TOP" />
+                  <Label fx:id="imie" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Imie:" />
+                  <Label fx:id="email" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="75.0" prefWidth="505.0" text="Email:" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
+                  <Button alignment="CENTER" layoutX="758.0" layoutY="10.0" mnemonicParsing="false" onAction="#showAccountPanel" prefHeight="30.0" prefWidth="100.0" text="Konto" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#logout" prefHeight="30.0" prefWidth="100.0" text="Wyloguj" GridPane.columnIndex="3" GridPane.valignment="TOP" />
                </children>
             </GridPane>
             <Pane maxHeight="64.0" prefHeight="33.0" prefWidth="848.0" GridPane.rowIndex="1">
@@ -104,7 +104,7 @@
                               <Font name="System Italic" size="24.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton layoutX="64.0" layoutY="13.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="50.0" text="U" underline="true">
+                        <ToggleButton layoutX="64.0" layoutY="13.0" mnemonicParsing="false" onAction="#underline" prefHeight="47.0" prefWidth="50.0" text="U" underline="true">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -116,13 +116,13 @@
                   </ToolBar>
                   <ToolBar layoutX="225.0" layoutY="3.0" prefHeight="59.0" prefWidth="384.0">
                      <items>
-                        <ToggleButton mnemonicParsing="false" prefHeight="47.0" prefWidth="50.0" text="A" textFill="#2af54f">
+                        <ToggleButton mnemonicParsing="false" onAction="#setGreenFontColor" prefHeight="47.0" prefWidth="50.0" text="A" textFill="#2af54f">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </ToggleButton>
-                        <Label alignment="CENTER" prefHeight="47.0" prefWidth="90.0" text="Size: 20" />
-                        <Slider max="50.0" min="20.0" prefHeight="11.0" prefWidth="164.0" showTickMarks="true" />
+                        <Label fx:id="infoSize" alignment="CENTER" prefHeight="47.0" prefWidth="90.0" text="Size: 20" />
+                        <Slider max="50.0" min="20.0" onDragDetected="#setFontSize" prefHeight="11.0" prefWidth="164.0" showTickMarks="true" />
                      </items>
                      <effect>
                         <DropShadow blurType="GAUSSIAN" color="#ffffff7d" height="24.29" radius="12.34" spread="0.5" width="27.07" />
