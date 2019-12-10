@@ -1,12 +1,25 @@
+import SQL.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 public class SomeNoteController {
 
 
-    public SomeNoteController(){}
-    @FXML
-    void initialize(){}
 
+    private static User user;
+    @FXML
+    Label imie;
+    @FXML
+    Label email;
+
+
+    public SomeNoteController(){
+
+    }
+    @FXML
+    void initialize(){
+
+    }
     @FXML
     public void addNotebook(){}
 
@@ -14,17 +27,14 @@ public class SomeNoteController {
     public void addNote(){}
 
     @FXML
-    public void setGreenFontColor(){}
-
-    @FXML
-    public void setFontSize(){}
-
-    @FXML
     public void showAccountPanel(){}
 
     @FXML
-    public void logout(){}
+    public void logout(){
+        SceneManager.renderScene("login");
+    }
 
-    @FXML
-    public void underline(){}
+    public static void setUser(User user) {
+        SomeNoteController.user = user;
+    }
 }

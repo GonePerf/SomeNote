@@ -31,8 +31,16 @@ public class SceneManager {
             if(name.equals("someNote")) {
                 stage.setX(primaryScreenBounds.getMinX());
                 stage.setY(primaryScreenBounds.getMinY());
-                stage.setMinHeight(primaryScreenBounds.getHeight());
+                stage.setMinHeight(primaryScreenBounds.getHeight()/1.2);
                 stage.setMinWidth(primaryScreenBounds.getWidth()/2);
+            }
+            else if(name.equals("login")){
+                stage.setX((primaryScreenBounds.getWidth()/2)-404);
+                stage.setY((primaryScreenBounds.getHeight()/2)-250);
+                stage.setMaxWidth(809);
+                stage.setMaxHeight(500);
+                stage.setMinHeight(500);
+                stage.setMinWidth(809);
             }
             stage.show();
         } catch (IOException e) {

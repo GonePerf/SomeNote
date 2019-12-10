@@ -55,6 +55,7 @@ public class Login {
     void tryLogin() throws Exception {
 
                 System.out.println("Znaleziono uzytkownika");
+                SomeNoteController.setUser(new User());
                 SceneManager.renderScene("someNote");
 
     }
