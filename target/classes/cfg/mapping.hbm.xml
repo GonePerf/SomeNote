@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="SQL.User" table="users">
+
+        <id name="id" column="user_id">
+
+            <generator class="increment"/>
+
+        </id>
+
+        <property name="email" column="user_email" />
+
+        <property name="password" column="user_password" />
+
+        <property name="pin" column="user_pin" />
+
+        <property name="name" column="user_name" />
+
+    </class>
+
+    <class name="SQL.Note" table="notes">
+
+        <id name="note_id" column="note_id">
+
+            <generator class="increment"/>
+
+        </id>
+
+        <property name="notebook_id" column="notebook_id" />
+
+        <property name="name" column="note_name" />
+
+        <property name="content" column="note_content" />
+
+        <property name="date" column="note_date" />
+
+    </class>
+
+    <class name="SQL.Notebook" table="notebooks">
+
+        <id name="notebook_id" column="notebook_id">
+
+            <generator class="increment"/>
+
+        </id>
+
+        <property name="user_id" column="user_id" />
+
+        <property name="name" column="notebook_name" />
+
+    </class>
+
+</hibernate-mapping>

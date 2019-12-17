@@ -1,3 +1,6 @@
+import SQL.Note;
+import SQL.Notebook;
+import SQL.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -33,7 +36,7 @@ public class HibernateUtil {
 
     private static void setSessionFactory(String pathConfiguration) {
         Configuration configuration = new Configuration()
-                .configure(pathConfiguration);
+                .configure(pathConfiguration).addAnnotatedClass(User.class).addAnnotatedClass(Note.class).addAnnotatedClass(Notebook.class);
 
         serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
                 configuration.getProperties()).build();

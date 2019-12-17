@@ -7,16 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import static java.awt.Color.BLACK;
-
-
 public class Info extends Application {
-    String info = "Błędny login";
 
-    public Info(String info) {
-        this.info = info;
-    }
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
@@ -28,7 +20,7 @@ public class Info extends Application {
         vBox.setAlignment(Pos.BOTTOM_CENTER);
         Label label = new Label();
         label.setStyle("-fx-text-fill: white;");
-        label.setText(info);
+        label.setText("dzik");
         Button button = new Button("Ok");
         button.setStyle("-fx-background-color: #091F41; -fx-text-fill:white;");
         button.setMinSize(168,34);
@@ -39,7 +31,6 @@ public class Info extends Application {
         });
         vBox.getChildren().addAll(label,button);
         Scene scene = new Scene(vBox);
-        //scene.getStylesheets().addAll("modenadark.css");
 
         primaryStage.setScene(scene);
         primaryStage.setMinWidth(350);

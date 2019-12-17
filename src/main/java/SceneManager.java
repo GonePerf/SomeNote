@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
@@ -33,6 +34,7 @@ public class SceneManager {
                 stage.setY(primaryScreenBounds.getMinY());
                 stage.setMinHeight(primaryScreenBounds.getHeight()/1.2);
                 stage.setMinWidth(primaryScreenBounds.getWidth()/2);
+
             }
             else if(name.equals("login")){
                 stage.setX((primaryScreenBounds.getWidth()/2)-404);

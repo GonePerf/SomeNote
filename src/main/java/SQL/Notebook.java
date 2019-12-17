@@ -14,9 +14,15 @@ public class Notebook implements Serializable {
     private long notebook_id;       //Primary key
     @Column(name = "user_id")
     private long user_id;           //Foregin key
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
     @Column(name = "name")
     private String name;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "notebook_id")
     private List<Note> notes;           //List of topics in a notebook
 

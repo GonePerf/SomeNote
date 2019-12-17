@@ -19,7 +19,7 @@ public class User implements Serializable {
     private String firstName;
     @Column(name = "pin")
     private String pin;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private List<Notebook> notebooks;  //List of user notebooks
     //User can have many notebooks and notebook can have many notes

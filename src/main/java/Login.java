@@ -1,24 +1,18 @@
+import SQL.Notebook;
 import SQL.User;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-
-import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import java.io.IOException;
-
-import static javax.persistence.Persistence.createEntityManagerFactory;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Login {
 
-    @FXML
-    private Pane scene;
+
     @FXML
     private TextField email;
     @FXML
@@ -53,48 +47,82 @@ public class Login {
     }
     @FXML
     void tryLogin() throws Exception {
+        User user = null;
+        UserDAO userDAO = new UserDAO();
+        DAO.OpenConnection("cfg/HibernateMySQL.cfg.xml");
+        List<User> lista = userDAO.findAll();
+        for(User u : lista){
+            if(u.getEmail().equals(email.getText()) && u.getPassword().equals(password.getText())){
+                user = u;
+            }
+        }
+        if(user == null) {
+            DialogUtils.errorDialog();
+        }
+        else {
 
-                System.out.println("Znaleziono uzytkownika");
-                SomeNoteController.setUser(new User());
-                SceneManager.renderScene("someNote");
+
+
+            System.out.println("Znaleziono uzytkownika");
+            SomeNoteController.setUser(user);
+            SceneManager.renderScene("someNote");
+        }
 
     }
     @FXML
-    void changePassword(){
+    void changePassword() throws Exception {
         System.out.println("Zmiana hasła");
+        User user = new User();
+        HibernateUtil.OpenConnection("cfg/HibernateMySQL.cfg.xml");
+        UserDAO userDAO = new UserDAO();
+        List<User> lista = userDAO.findAll();
+        for(int i = 0; i < lista.size(); i++){
+            user = lista.get(i);
+            if(user.getEmail().equals(email.getText()) && user.getPin().equals(pin.getText())){
+                if(password.getText().equals(confirmPassword.getText()) && password.getText().length() > 5){
+                    user.setPassword(password.getText());
+                    userDAO.update(user);
+                    DialogUtils.changingPasswordDialog();
+                }
+            }
+        }
     }
     @FXML
     void createUser() throws Exception {
         Info info;
+        User user = new User();
         if(email.getText().length() == 0 && password.getText().length() == 0
         && confirmPassword.getText().length() == 0 && pin.getText().length() == 0
         && name.getText().length() == 0){
-            info = new Info("Wypełnij pola");
-            info.start(new Stage());
+            DialogUtils.errorDialog("Wypełinj pola!");
         }
         else if(email.getText().length() < 6) {
-            info = new Info("Błędny email");
-            info.start(new Stage());
+            DialogUtils.errorDialog("Niepoprawny email!");
         }
         else if(password.getText().length() < 6){
-            info = new Info("Hasło powinno zawierać conajmniej 5 znaków");
-            info.start(new Stage());
+            DialogUtils.errorDialog("Hasło musi zawierać minimum 6 znaków!");
         }
         else if(!(password.getText().equals(confirmPassword.getText()))){
-            info = new Info("Hasła muszą być identyczne!");
-            info.start(new Stage());
+            DialogUtils.errorDialog("Hasła nie są identyczne!");
         }
         else if(pin.getText().length() != 4){
-            info = new Info("Pin powinien składać się z 4 znaków");
-            info.start(new Stage());
+            DialogUtils.errorDialog("Pin ma mieć 4 znaki!");
         }
         else if(name.getText().length() < 3){
-            info = new Info("Podaj poprawne imie");
-            info.start(new Stage());
+            DialogUtils.errorDialog("Podaj poprawne imie!");
         }
         else{
-            //Operations.createUser(email.getText(),password.getText(),name.getText(),pin.getText());
+            HibernateUtil.OpenConnection("cfg/HibernateMySQL.cfg.xml");
+            UserDAO userDAO = new UserDAO();
+            user.setPin(pin.getText());
+            user.setEmail(email.getText());
+            user.setPassword(password.getText());
+            user.setFirstName(name.getText());
+            user.setNotebooks(new ArrayList<Notebook>());
+            userDAO.save(user);
+
         }
-        System.out.println("Tworzenie konta");
+        SceneManager.renderScene("login");
+        DialogUtils.creatingAccountDialog();
     }
 }

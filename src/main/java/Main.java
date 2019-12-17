@@ -43,6 +43,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
           launch(args);
+
 //        User user = new User();
 //        user.setFirstName("Adrian");
 //        user.setPassword("SFB@&87b");
@@ -58,11 +59,39 @@ public class Main extends Application {
 //        user.addNotebook(notebook);
 //        user.addNotebook(notebook);
 //        notebook.addNote(note);
+//
+//        HibernateUtil.OpenConnection("cfg/HibernateMySQL.cfg.xml");
+//
+//        NoteDAO noteDAO = new NoteDAO();
+//        noteDAO.save(note);
+//        note.setName("Wodorotlenki");
+//        noteDAO.save(note);
+//
+//        NotebookDAO notebookDAO = new NotebookDAO();
+//        notebookDAO.save(notebook);
+//
+//        UserDAO userDAO = new UserDAO();
+//        userDAO.save(user);
+//
+//        List<User> lista = userDAO.findAll();
+//        for(int i = 0; i < lista.size(); i++){
+//            System.out.println(lista.get(i).toString());
+//        }
+
+//        user.setNotebooks(new ArrayList<Notebook>());
+//        Notebook notebook = new Notebook();
+//        notebook.setName("Chemia");
+//        notebook.setNotes(new ArrayList<Note>());
+//        Note note = new Note();
+//        note.setName("Pierwiastki");
+//        note.setContent("O - Tlen");
+//        user.addNotebook(notebook);
+//        user.addNotebook(notebook);
+//        notebook.addNote(note);
 //        Configuration configuration = new Configuration().
-//                configure("cfg/hibernateMySQL.cfg.xml").
-//                addAnnotatedClass(User.class).
-//                addAnnotatedClass(Notebook.class).
-//                addAnnotatedClass(Note.class);
+//                configure("cfg/HibernateMySQL.cfg.xml").addAnnotatedClass(User.class)
+//                .addAnnotatedClass(Notebook.class).addAnnotatedClass(Note.class);
+//
 //
 //        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 //                .applySettings(configuration.getProperties()).build();
