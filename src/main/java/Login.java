@@ -1,17 +1,25 @@
 import SQL.Notebook;
 import SQL.User;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import javax.jws.soap.SOAPBinding;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class Login {
 
+    static List<User> lista;
+    static File file = new File("remember.txt");
 
     @FXML
     private TextField email;
@@ -23,6 +31,8 @@ public class Login {
     private PasswordField password;
     @FXML
     private PasswordField confirmPassword;
+    @FXML
+    private CheckBox remember;
 
     public Login(){
 
@@ -30,12 +40,30 @@ public class Login {
 
     }
     @FXML
-    void initialize(){
+    void enter(){
 
+    }
+    @FXML
+    void initialize() throws FileNotFoundException {
+
+        DAO.OpenConnection("cfg/HibernateMySQL.cfg.xml");
+        lista = new UserDAO().findAll();
+        if(file.exists()) {
+            String pass = null;
+            Scanner scanner = new Scanner(file);
+
+            if(scanner.hasNext()) {
+                pass = scanner.nextLine();
+                String[] tab = pass.split(" ");
+                email.setText(tab[0]);
+                password.setText(tab[1]);
+            }
+        }
     }
     @FXML
     void showRegisterPanel() throws IOException {
         SceneManager.renderScene("register");
+        
     }
     @FXML
     void backToLogin() throws IOException {
@@ -48,21 +76,28 @@ public class Login {
     @FXML
     void tryLogin() throws Exception {
         User user = null;
-        UserDAO userDAO = new UserDAO();
-        DAO.OpenConnection("cfg/HibernateMySQL.cfg.xml");
-        List<User> lista = userDAO.findAll();
+
         for(User u : lista){
             if(u.getEmail().equals(email.getText()) && u.getPassword().equals(password.getText())){
                 user = u;
             }
         }
         if(user == null) {
-            DialogUtils.errorDialog();
+            DialogUtils.errorDialog("Niepoprawne dane!");
         }
         else {
 
 
+            if(remember.isSelected()) {
 
+                if(!file.exists()) {
+                    file.createNewFile();
+                    PrintWriter zapis = new PrintWriter("remember.txt");
+                    zapis.println(user.getEmail()+" "+user.getPassword());
+                    zapis.close();
+                }
+                // pamiętaj mnie
+            }
             System.out.println("Znaleziono uzytkownika");
             SomeNoteController.setUser(user);
             SceneManager.renderScene("someNote");
@@ -73,7 +108,6 @@ public class Login {
     void changePassword() throws Exception {
         System.out.println("Zmiana hasła");
         User user = new User();
-        HibernateUtil.OpenConnection("cfg/HibernateMySQL.cfg.xml");
         UserDAO userDAO = new UserDAO();
         List<User> lista = userDAO.findAll();
         for(int i = 0; i < lista.size(); i++){
@@ -112,7 +146,6 @@ public class Login {
             DialogUtils.errorDialog("Podaj poprawne imie!");
         }
         else{
-            HibernateUtil.OpenConnection("cfg/HibernateMySQL.cfg.xml");
             UserDAO userDAO = new UserDAO();
             user.setPin(pin.getText());
             user.setEmail(email.getText());

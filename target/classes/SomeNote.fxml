@@ -14,7 +14,7 @@
 
 <GridPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="843.0" prefWidth="1108.0" stylesheets="@modenadark.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SomeNoteController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="260.0" prefWidth="260.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.0" minWidth="300.0" prefWidth="260.0" />
     <ColumnConstraints hgrow="SOMETIMES" />
   </columnConstraints>
   <rowConstraints>
@@ -26,19 +26,19 @@
          <children>
             <VBox fx:id="notebooks" prefHeight="200.0" prefWidth="130.0">
                <children>
-                  <ListView fx:id="listNotebooks" onMouseClicked="#showNotes" />
-                  <Button mnemonicParsing="false" onAction="#addNotebook" prefHeight="40.0" prefWidth="138.0" text="+">
+                  <ListView fx:id="listNotebooks" minHeight="600.0" minWidth="150.0" onMouseClicked="#showNotes" />
+                  <Button mnemonicParsing="false" onAction="#addNotebook" prefHeight="40.0" prefWidth="150.0" text="+">
                      <font>
-                        <Font name="System Bold Italic" size="22.0" />
+                        <Font name="System Bold Italic" size="25.0" />
                      </font></Button>
                </children>
             </VBox>
             <VBox fx:id="notes" prefHeight="200.0" prefWidth="130.0">
                <children>
-                  <ListView fx:id="listNotes" onMouseClicked="#showContent" />
+                  <ListView fx:id="listNotes" minHeight="600.0" minWidth="150.0" onMouseClicked="#showContent" />
                   <Button mnemonicParsing="false" onAction="#addNote" prefHeight="40.0" prefWidth="179.0" text="+">
                      <font>
-                        <Font name="System Bold Italic" size="22.0" />
+                        <Font name="System Bold Italic" size="25.0" />
                      </font></Button>
                </children>
             </VBox>
@@ -62,22 +62,24 @@
          <children>
             <GridPane alignment="TOP_CENTER">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="116.0" prefWidth="149.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="554.0" minWidth="10.0" prefWidth="490.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="10.0" prefWidth="96.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="72.0" prefWidth="95.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.0" minWidth="116.0" prefWidth="232.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="554.0" minWidth="10.0" prefWidth="280.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="10.0" prefWidth="169.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="168.0" minWidth="72.0" prefWidth="95.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label fx:id="imie" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Imie:" />
-                  <Label fx:id="email" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="75.0" prefWidth="505.0" text="Email:" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
                   <Button alignment="CENTER" layoutX="758.0" layoutY="10.0" mnemonicParsing="false" onAction="#showAccountPanel" prefHeight="30.0" prefWidth="100.0" text="Konto" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#logout" prefHeight="30.0" prefWidth="100.0" text="Wyloguj" GridPane.columnIndex="3" GridPane.valignment="TOP" />
                </children>
             </GridPane>
-            <Pane maxHeight="64.0" prefHeight="33.0" prefWidth="848.0" GridPane.rowIndex="1" />
+            <Pane maxHeight="64.0" prefHeight="33.0" prefWidth="848.0" GridPane.rowIndex="1">
+               <children>
+                  <Label fx:id="email" layoutX="8.0" layoutY="-5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="75.0" prefWidth="505.0" text="Email:" />
+               </children></Pane>
          </children>
       </GridPane>
       <HTMLEditor fx:id="content" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" onKeyReleased="#saveContent" style="-fx-background-color: none;" GridPane.columnIndex="1" GridPane.rowIndex="1" />

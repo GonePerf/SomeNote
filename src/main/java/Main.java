@@ -32,8 +32,10 @@ public class Main extends Application {
         SceneManager.addScene("forgotPassword", "ForgotPassword.fxml");
         SceneManager.addScene("login", "Login.fxml");
         SceneManager.addScene("someNote", "SomeNote.fxml");
-
+        SceneManager.addScene("wait", "Loading.fxml");
         SceneManager.renderScene("login");
+
+
 
 //        primaryStage.setResizable(false);
 //        root.requestFocus();

@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.web.HTMLEditor;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,10 @@ public class SomeNoteController {
 
 
     private Notebook lastSelectedNotebook;
-    private Note lasSelectedNote;
+    private Note lastSelectedNote;
+    static NoteDAO noteDAO = new NoteDAO();
+    static Note note;
+    static boolean isNoteChanged = false;
 
     private static User user;
     @FXML
@@ -38,14 +40,23 @@ public class SomeNoteController {
     @FXML
     void initialize(){
 
+        listNotebooks.setFixedCellSize(40);
+        listNotes.setFixedCellSize(30);
+        listNotebooks.setStyle("-fx");
         listNotebooks.getItems().addAll(user.getNotebooks());
         imie.setText("Imie: " + user.getFirstName());
         email.setText("Email: " + user.getEmail());
         content.setDisable(true);
+        HibernateUtil.OpenConnection("cfg/HibernateMySQL.cfg.xml");
     }
 
     @FXML
     public void showNotes(){
+
+       if(isNoteChanged) {
+           noteDAO.update(note);
+           isNoteChanged = false;
+       }
         listNotes.getItems().clear();
         content.setHtmlText("");
         content.setDisable(true);
@@ -61,20 +72,26 @@ public class SomeNoteController {
 
     @FXML
     public void showContent(){
-        if(listNotes.getSelectionModel().getSelectedItem() != null || lasSelectedNote == listNotes.getSelectionModel().getSelectedItem()) {
-            Note note = (Note) listNotes.getSelectionModel().getSelectedItem();
+        if(listNotes.getSelectionModel().getSelectedItem() != null || lastSelectedNote == listNotes.getSelectionModel().getSelectedItem()) {
+            if(note != null)
+                noteDAO.update(note);
+            note = (Note) listNotes.getSelectionModel().getSelectedItem();
 
             content.setHtmlText(note.getContent());
             content.setDisable(false);
-            lasSelectedNote = note;
+            lastSelectedNote = note;
         }
 
     }
     @FXML
     public void saveContent(){
 
-        Note note = (Note) listNotes.getSelectionModel().getSelectedItem();
+        note = (Note) listNotes.getSelectionModel().getSelectedItem();
         note.setContent(content.getHtmlText());
+        isNoteChanged = true;
+
+
+
     }
 
     @FXML
@@ -86,7 +103,7 @@ public class SomeNoteController {
             notebook.setNotes(new ArrayList<>());
             notebook.setName(name);
             notebook.setUser_id(user.getId());
-            HibernateUtil.OpenConnection("cfg/HibernateMySQL.cfg.xml");
+
             NotebookDAO notebookDAO = new NotebookDAO();
             notebookDAO.save(notebook);
             UserDAO userDAO = new UserDAO();
@@ -104,11 +121,12 @@ public class SomeNoteController {
         String name = DialogUtils.getNameDialog("tematu");
         if(name.length() < 3 || name.isEmpty()) DialogUtils.badNameDialog();
         else {
+            if(note != null)
+                noteDAO.update(note);
             Note note = new Note();
             note.setName(name);
             Notebook notebook = (Notebook) listNotebooks.getSelectionModel().getSelectedItem();
             note.setNotebook_id(notebook.getNotebook_id());
-            HibernateUtil.OpenConnection("cfg/HibernateMySQL.cfg.xml");
             NoteDAO noteDAO = new NoteDAO();
             noteDAO.save(note);
             NotebookDAO notebookDAO = new NotebookDAO();
@@ -123,6 +141,9 @@ public class SomeNoteController {
 
     @FXML
     public void logout(){
+
+        if(note != null)
+            noteDAO.update(note);
         SceneManager.renderScene("login");
     }
 
